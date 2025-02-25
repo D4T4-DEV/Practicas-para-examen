@@ -1,20 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { LoginUseCase } from "./src/application/use_cases/auth/LoginUseCase";
+import { LogoutUseCase } from "./src/application/use_cases/auth/LogoutUseCase";
+import { GetUserUseCase } from "./src/application/use_cases/GetUserUseCase";
+import { AuthLocalDataSource } from "./src/data/datasources/AuthLocalDataSource";
+import { AuthViewModel } from "./src/presentation/view_models/AuthViewModel";
+import { HomeScreen } from "./src/presentation/views/HomeScreen";
+import { LoginScreen } from "./src/presentation/views/LoginScreen";
+import { AuthUserRepositoryImpl } from "./src/data/repositories/AuthRepositoryImpl";
+
+const Stack = createStackNavigator();
+const repository = new AuthUserRepositoryImpl(new AuthLocalDataSource());
+const viewModel = new AuthViewModel(
+  new LoginUseCase(repository),
+  new LogoutUseCase(repository),
+  new GetUserUseCase(repository)
+);
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login">
+          {() => <LoginScreen viewModel={viewModel} />}
+        </Stack.Screen>
+        <Stack.Screen name="Home">
+          {() => <HomeScreen viewModel={viewModel} />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
