@@ -44,12 +44,12 @@ export default function CouterViewModel({ children }: { children: React.ReactNod
 
     const addValue = async (value: number): Promise<void> => {
         await addValueUseCase.execute(value);
-        setCounter(await getValueUseCase.execute());
+        setCounter(prevCounter => ({ ...prevCounter, value: prevCounter.value + value }));
     }
 
     const subtractValue = async (value: number): Promise<void> => {
         await subtracValueUseCase.execute(value);
-        setCounter(await getValueUseCase.execute());
+        setCounter(prevCounter => ({ ...prevCounter, value: prevCounter.value - value }));
     }
 
 
