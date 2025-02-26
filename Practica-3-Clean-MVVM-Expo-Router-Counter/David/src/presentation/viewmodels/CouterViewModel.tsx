@@ -31,9 +31,9 @@ export default function CouterViewModel({ children }: { children: React.ReactNod
 
     const [counter, setCounter] = useState<Counter>({ value: 0 });
 
-    useEffect(()=>{
+    useEffect(() => {
         getValueUseCase.execute().then(setCounter);
-    },[])
+    }, []);
 
     const addValue = async (value: number): Promise<void> => {
         await addValueUseCase.execute(value);
