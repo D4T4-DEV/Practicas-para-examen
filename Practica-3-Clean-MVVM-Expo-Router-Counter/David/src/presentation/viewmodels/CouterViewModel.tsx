@@ -6,6 +6,7 @@ import { CouterRepositoryImpl } from '../../data/repositories/CouterRepositoryIm
 import { GetValueUseCase } from '../../application/use_cases/GetValueUseCase';
 import { AddValueUseCase } from '../../application/use_cases/AddValueUseCase';
 import { SubtractValueUseCase } from '../../application/use_cases/SubtractValueUseCase';
+import { ResetValueUseCase } from '../../application/use_cases/ResetValueUseCase';
 
 interface CounterContext extends CouterRepository {
     counter: Counter
@@ -32,6 +33,7 @@ export default function CouterViewModel({ children }: { children: React.ReactNod
 
     // Casos de uso para dotar de las acciones 
     const getValueUseCase = new GetValueUseCase(counterRepository);
+    const resetValueUseCase = new ResetValueUseCase(counterRepository);
     const addValueUseCase = new AddValueUseCase(counterRepository);
     const subtracValueUseCase = new SubtractValueUseCase(counterRepository);
 
@@ -57,9 +59,13 @@ export default function CouterViewModel({ children }: { children: React.ReactNod
         return await getValueUseCase.execute();
     }
 
+    const resetValue = async (): Promise<void> => {
+        await resetValueUseCase.execute();
+        setCounter({ value: 0 })
+    }
 
     return (
-        <CounterContext.Provider value={{ counter, addValue, subtractValue, getValue }}>
+        <CounterContext.Provider value={{ counter, addValue, subtractValue, getValue, resetValue }}>
             {children}
         </CounterContext.Provider>
     )

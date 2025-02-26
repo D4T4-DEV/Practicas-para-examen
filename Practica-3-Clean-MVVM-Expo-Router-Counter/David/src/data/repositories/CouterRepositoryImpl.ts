@@ -9,6 +9,10 @@ export class CouterRepositoryImpl implements CouterRepository {
         return this.counter;
     }
 
+    async resetValue(): Promise<void> {
+        this.counter = { value: 0 };
+    }
+
     async addValue(value: number): Promise<void> {
         this.counter.value += value;
     }

@@ -5,13 +5,18 @@ import { useCounter } from '../viewmodels/CouterViewModel';
 const SubtractValueScreen = () => {
 
     const { width, height } = useWindowDimensions();
-    const { counter, subtractValue } = useCounter();
+    const { counter, subtractValue, resetValue } = useCounter();
 
     const isCellphone = width <= 600 ? true : false;
 
     const handlePress = async (type: number) => {
 
         switch (type) {
+
+            case 0:
+                await resetValue();
+                break;
+
             case 1:
                 await subtractValue(1);
                 break;
@@ -56,6 +61,21 @@ const SubtractValueScreen = () => {
             >
                 <Text style={styles.textButton}>
                     Restar dos al contador
+                </Text>
+            </Pressable>
+
+            {/* Boton para restablecer el valor */}
+            <Pressable
+                onPress={() => { handlePress(0) }}
+                style={({ pressed }) => [
+                    {
+                        backgroundColor: pressed ? 'rgb(210, 230, 255)' : '#FFFF',
+                    },
+                    styles.wrapperCustom,
+                ]}
+            >
+                <Text style={styles.textButton}>
+                    Resetear valor
                 </Text>
             </Pressable>
 

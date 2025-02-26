@@ -5,32 +5,37 @@ import { useCounter } from '../viewmodels/CouterViewModel';
 const AddValueScreen = () => {
 
   const { width, height } = useWindowDimensions();
-  const { counter, addValue } = useCounter();
+  const { counter, addValue, resetValue } = useCounter();
 
   const isCellphone = width <= 600 ? true : false;
 
   const handlePress = async (type: number) => {
 
     switch (type) {
-        case 1:
-            await addValue(1);
-            break;
 
-        case 2:
-            await addValue(2);
-            break;
+      case 0:
+        await resetValue();
+        break;
 
-        default:
-            break;
+      case 1:
+        await addValue(1);
+        break;
+
+      case 2:
+        await addValue(2);
+        break;
+
+      default:
+        break;
     }
-}
+  }
 
   return (
     <View style={styles.principalContainer}>
       <Text style={[styles.title, { fontSize: isCellphone ? width * 0.06 : 48 }]}>Añade un valor al contador 🧮</Text>
       {/* Boton para sumar uno */}
       <Pressable
-        onPress={()=>{handlePress(1)}}
+        onPress={() => { handlePress(1) }}
         style={({ pressed }) => [
           {
             backgroundColor: pressed ? 'rgb(210, 230, 255)' : '#FFFF',
@@ -43,9 +48,9 @@ const AddValueScreen = () => {
         </Text>
       </Pressable>
 
-        {/* Boton para sumar dos */}
+      {/* Boton para sumar dos */}
       <Pressable
-        onPress={()=>{handlePress(2)}}
+        onPress={() => { handlePress(2) }}
         style={({ pressed }) => [
           {
             backgroundColor: pressed ? 'rgb(210, 230, 255)' : '#FFFF',
@@ -55,6 +60,21 @@ const AddValueScreen = () => {
       >
         <Text style={styles.textButton}>
           Sumar dos al contador
+        </Text>
+      </Pressable>
+
+      {/* Boton para restablecer el valor */}
+      <Pressable
+        onPress={() => { handlePress(0) }}
+        style={({ pressed }) => [
+          {
+            backgroundColor: pressed ? 'rgb(210, 230, 255)' : '#FFFF',
+          },
+          styles.wrapperCustom,
+        ]}
+      >
+        <Text style={styles.textButton}>
+          Resetear valor
         </Text>
       </Pressable>
 
@@ -84,7 +104,7 @@ const styles = StyleSheet.create({
   textButton: {
     fontSize: 18,
     margin: 5
-},
+  },
 });
 
 
