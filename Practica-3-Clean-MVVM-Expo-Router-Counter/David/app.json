@@ -2,6 +2,7 @@
   "expo": {
     "name": "David",
     "slug": "David",
+    "scheme": "davidapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
