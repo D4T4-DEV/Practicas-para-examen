@@ -16,7 +16,14 @@ interface CounterContext extends CouterRepository {
 const CounterContext = createContext<CounterContext | null>(null);
 
 // Hook personalizado
-export const useCounter = () => useContext(CounterContext);
+export const useCounter = () => {
+    const context = useContext(CounterContext);
+    if (!context) {
+        throw new Error("useCounter debe usarse dentro de un CounterContext.Provider");
+    }
+    return context;
+};
+
 
 export default function CouterViewModel({ children }: { children: React.ReactNode }) {
 
@@ -37,11 +44,14 @@ export default function CouterViewModel({ children }: { children: React.ReactNod
 
     const addValue = async (value: number): Promise<void> => {
         await addValueUseCase.execute(value);
+        setCounter(await getValueUseCase.execute());
     }
 
     const subtractValue = async (value: number): Promise<void> => {
         await subtracValueUseCase.execute(value);
+        setCounter(await getValueUseCase.execute());
     }
+
 
     const getValue = async (): Promise<Counter> => {
         return await getValueUseCase.execute();
