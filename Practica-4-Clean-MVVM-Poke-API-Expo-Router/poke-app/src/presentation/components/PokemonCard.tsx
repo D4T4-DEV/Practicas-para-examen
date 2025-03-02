@@ -1,12 +1,13 @@
 import { Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Pokemon from "../../domain/entities/Pokemon";
+import { memo } from "react";
 
 interface PokemonCardProps {
     pokemon: Pokemon;
     onPress(idPokemon: string): void
 }
 
-const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon, onPress }) => {
+const PokemonCard: React.FC<PokemonCardProps> = memo(({ pokemon, onPress }) => {
     // console.log('renderizando el pokemon', { pokemon });
     return (
         <TouchableOpacity style={styles.container} onPress={() => onPress(pokemon.id)}>
@@ -22,7 +23,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon, onPress }) => {
             </Text>
         </TouchableOpacity>
     )
-}
+});
 
 const styles = StyleSheet.create({
     container: {

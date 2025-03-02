@@ -1,6 +1,6 @@
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { usePokemon } from '../viewmodels/PokemonViewModel';
 import PokemonCard from '../components/PokemonCard';
 
@@ -25,10 +25,10 @@ const HomeScreen = () => {
         }
     };
 
-    const handlePress = (idPokemon: string) => {
+    const handlePress = useCallback((idPokemon: string) => {
         console.log(`Presionaste al pokemon ${idPokemon}`);
         router.push(`/about/${idPokemon}`)
-    }
+    }, []);
 
     useEffect(() => {
         fetchData();
