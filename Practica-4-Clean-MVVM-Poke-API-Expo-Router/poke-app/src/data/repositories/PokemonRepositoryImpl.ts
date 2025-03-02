@@ -3,11 +3,9 @@ import { PokemonRepository } from "../../domain/repositories/PokemonRepository";
 import { PokemonDataSource } from "../datasources/PokemonDataSource";
 
 export class PokemonRepositoryImpl implements PokemonRepository {
-    constructor(
-        private pokemonDataSource: PokemonDataSource,
-    ) { }
+    constructor(private readonly pokemonDataSource: PokemonDataSource) { }
 
-    async GetPokemons(limit: number): Promise<Pokemon[] | []> {
+    async GetPokemons(limit: number): Promise<Pokemon[]> {
         return await this.pokemonDataSource.GetPokemons(limit);
     }
 
@@ -15,7 +13,7 @@ export class PokemonRepositoryImpl implements PokemonRepository {
         return await this.pokemonDataSource.GetPokemonDescription(idPokemon, language);
     }
 
-    async GetPokemonsFetched(): Promise<Pokemon[] | []> {
+    async GetPokemonsFetched(): Promise<Pokemon[]> {
         return await this.pokemonDataSource.GetPokemonsFetched();
     }
 }
