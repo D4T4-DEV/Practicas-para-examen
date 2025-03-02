@@ -41,7 +41,7 @@ const HomeScreen = () => {
             onEndReachedThreshold={0.5}
             keyExtractor={(item) => item.id?.toString()}
             renderItem={({ item }) => <PokemonCard pokemon={item} onPress={handlePress} />}
-            ListHeaderComponent={<Text style={styles.header}>📷 Pokedex</Text>}
+            // ListHeaderComponent={<Text style={styles.header}>📷 Pokedex</Text>}
             ListFooterComponent={loading ? <ActivityIndicator size="large" color="red" /> : null}
             showsVerticalScrollIndicator={false}
             getItemLayout={(data, index) => ( // si los elementos tienen un tamaño fijo
