@@ -4,7 +4,7 @@ import { useCatFact } from '../viewmodels/CatFactProvider'
 import { useRouter } from 'expo-router';
 
 const HomeScreen = () => {
-  const { statictsUser } = useCatFact();
+  const { statictsUser, cleanStaticsData } = useCatFact();
   const navigation = useRouter();
 
 
@@ -13,11 +13,16 @@ const HomeScreen = () => {
     navigation.navigate('/game');
   }
 
+  const handleClearDataStatics = async () => {
+    await cleanStaticsData();
+  }
+
   return (
     <View style={styles.container}>
       <Button title='Iniciar juego' onPress={handleStartGame} />
       <Text>Correctas: {statictsUser?.correctAnswers | 0}</Text>
       <Text>Incorrectas: {statictsUser?.incorrectAnswers | 0}</Text>
+      <Button title='Borrar datos del juego' onPress={handleClearDataStatics} />
     </View>
   )
 }

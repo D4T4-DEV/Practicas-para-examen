@@ -18,4 +18,8 @@ export class CatFactRepositoryImpl implements CatFactRepository {
     async savedStaticsPlayer(playerStatics: PlayerStatics): Promise<void> {
         await this.localStoragePlayerStatics.savedStaticsPlayer(playerStatics);
     }
+
+    async clearAllStaticsPlayer(){
+        await this.localStoragePlayerStatics.clearAllStaticsPlayer();
+    }
 }

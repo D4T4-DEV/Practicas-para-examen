@@ -80,8 +80,16 @@ const CatFactProvider: React.FC<CatFactProviderProps> = ({ children }) => {
     //     });
     // };
 
+    const cleanStaticsData = async () => {
+        await catFactRepositoryImpl.clearAllStaticsPlayer();
+        setStatictsUser({
+            incorrectAnswers: 0,
+            correctAnswers: 0,
+        });
+    }
+
     return (
-        <CatFactContext.Provider value={{ catFact, statictsUser, checkAnswer }}>
+        <CatFactContext.Provider value={{ catFact, statictsUser, checkAnswer, cleanStaticsData }}>
             {children}
         </CatFactContext.Provider>
     )
