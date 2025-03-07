@@ -4,10 +4,10 @@ import { Stack } from 'expo-router'
 const StackLayout = () => {
     return (
         <Stack screenOptions={{
-            title: 'Juego del gato'
+            title: 'Cat Fact Game 😺'
         }}>
             <Stack.Screen name='index' />
-            <Stack.Screen name='game' />
+            <Stack.Screen name='game' options={{ title: 'Andamos jugando 🙀' }} />
         </Stack>
     )
 }

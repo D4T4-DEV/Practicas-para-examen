@@ -41,7 +41,8 @@ const CatFactProvider: React.FC<CatFactProviderProps> = ({ children }) => {
     }, []);
 
 
-    const checkAnswer = async (catFact: CatFact, answer: boolean,) => {
+    const checkAnswer = async (catFact: CatFact, answer: boolean) => {
+
         if (answer === catFact.isAFact) {
             setStatictsUser((prevStats: PlayerStatics) => {
                 return {
@@ -51,6 +52,7 @@ const CatFactProvider: React.FC<CatFactProviderProps> = ({ children }) => {
             });
             console.log('Acertaste')
             setCatFact('');
+
         } else {
             setStatictsUser((prevStats: PlayerStatics) => {
                 return {

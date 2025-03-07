@@ -1,50 +1,73 @@
-import { View, Text, Modal, SafeAreaView, Pressable, StyleSheet } from "react-native";
+import { CatFact } from "@/src/domain/entities/CatFact";
+import React from "react";
+import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-interface ResultModalProps {
-    modalVisible: boolean;
-    setModalVisible: (visible: boolean) => void;
-    isCorrect: boolean;
+interface ModalProps {
+    visible: boolean;
+    onClose: () => void;
+    userResponse: boolean;
+    catFactIsAFact: boolean;
 }
 
-const ResultModal: React.FC<ResultModalProps> = ({
-    modalVisible,
-    setModalVisible,
-    isCorrect,
-}) => {
-    // const [modalVisible, setModalVisible] = useState<boolean>(false);
-    // const [isCorrect, setIsCorrect] = useState<boolean>(false);
-    // const handleButtonPress = (isReal: boolean) => {
-    //     setModalVisible(true);
-    // };
-
+const ModalComponent: React.FC<ModalProps> = ({ visible, onClose, userResponse, catFactIsAFact }) => {
     return (
-        <SafeAreaView>
-            <Modal 
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-                setModalVisible(false);
-            }}>
-                <View style={styles.container}>
-                    <Text>{isCorrect ? Correcto: Incorrecto}</Text>
-                <Pressable
-                onPress={() => setModalVisible(false)}>
-                    <Text>Ok</Text>
-                </Pressable>
+        <Modal transparent animationType="slide" visible={visible} onRequestClose={onClose}>
+            <View style={styles.overlay}>
+                <View style={styles.modalContainer}>
+
+                    <Text style={styles.title}>La respuesta dada es...</Text>
+                    <Text style={[styles.reponse, { color: userResponse === catFactIsAFact ? 'green' : 'red' }]}>{userResponse === catFactIsAFact ? 'Correcta 😼' : 'Incorrecta 😿'}</Text>
+
+                    {userResponse != catFactIsAFact ?
+                        <Text>
+                            La respuesta era {catFactIsAFact === true ? 'Verdadera' : 'Falsa'}
+                        </Text>
+                        : null
+                    }
+
+                    <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+                        <Text style={styles.closeText}>Cerrar</Text>
+                    </TouchableOpacity>
                 </View>
-            </Modal>
-        </SafeAreaView>
-    )
-}
+            </View>
+        </Modal>
+    );
+};
 
 const styles = StyleSheet.create({
-    container: {
+    overlay: {
         flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
+        backgroundColor: "rgba(0,0,0,0.5)",
         justifyContent: "center",
+        alignItems: "center",
+    },
+    modalContainer: {
+        width: "80%",
+        backgroundColor: "#fff",
+        padding: 20,
+        borderRadius: 10,
+        alignItems: "center",
+    },
+    title: {
+        fontSize: 14,
+        fontWeight: "bold",
+        marginBottom: 10,
+    },
+    reponse: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginBottom: 10,
+    },
+    closeButton: {
+        marginTop: 10,
+        backgroundColor: "#007bff",
+        padding: 10,
+        borderRadius: 5,
+    },
+    closeText: {
+        color: "#fff",
+        fontWeight: "bold",
     },
 });
 
-export default ResultModal;
+export default ModalComponent;

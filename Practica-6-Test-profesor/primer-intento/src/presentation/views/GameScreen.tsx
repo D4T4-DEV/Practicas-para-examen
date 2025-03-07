@@ -1,27 +1,33 @@
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { useCatFact } from '../viewmodels/CatFactProvider'
 import { CatFact } from '@/src/domain/entities/CatFact';
+import AnswerModal from '../components/AnswerModal';
 
 const GameScreen = () => {
 
     const { catFact, statictsUser, checkAnswer } = useCatFact();
 
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [userResponse, setUserResponse] = useState<boolean>(false);
+
 
     const handleAnswer = async (catFact: CatFact, userAnswer: boolean) => {
         await checkAnswer(catFact, userAnswer);
+        setUserResponse(userAnswer); // Guarda la respuesta
+        setShowModal(true); // Abre el modal
     }
 
     return (
         <View style={styles.container}>
             <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Pregunta:</Text>
-            {/* BtnContainer */}
             <Text>
                 {
                     catFact?.fact ? (catFact?.fact) : <ActivityIndicator />
                 }
             </Text>
 
+            {/* BtnContainer */}
             <View style={styles.containerButton}>
                 <TouchableOpacity style={styles.btnFalse} onPress={() => handleAnswer(catFact, false)}>
                     <Text style={{ color: 'white', fontWeight: 'bold' }}>Falso</Text>
@@ -35,6 +41,12 @@ const GameScreen = () => {
                 <Text>Correctas: {statictsUser?.correctAnswers | 0}</Text>
                 <Text>Incorrectas: {statictsUser?.incorrectAnswers | 0}</Text>
             </View>
+            <AnswerModal
+                visible={showModal}
+                onClose={() => setShowModal(false)}
+                userResponse={userResponse}
+                catFactIsAFact={catFact?.isAFact}
+            />
         </View>
     );
 }
